@@ -15,5 +15,5 @@ def firstIndex(arr,x,key):
         print(key)
         return key
     else:
-        firstIndex(arr,x,key+1)
-firstIndex(arr,num,0)
+        return firstIndex(arr,x,key+1)
+print(firstIndex(arr,num,0))
