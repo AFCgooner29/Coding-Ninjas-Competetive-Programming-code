@@ -1,5 +1,7 @@
 package advanced_recursion;
-
+/*
+ * remember this
+ */
 public class print_all_subseq {
 	public static void printer_sub_seq(String input,String output) {
 		if(input.length()==0) {
