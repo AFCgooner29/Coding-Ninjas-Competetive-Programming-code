@@ -1,6 +1,5 @@
 package graphs1;
 
-import java.beans.Visibility;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -36,23 +35,48 @@ Sample Output :
 1
  */
 public class Connecting_dots {
-	public static void finder(String[][] graph,int x,int y,int k,String s1,int[][] visited) {
+	/*
+	 * Approach is to go from start point and go on checking for same letter
+	 * at adjacent nodes but we wont go back to initx and intity but
+	 * if we have found at least four 4 elements then we cang go to initx and intiy or we can move further
+	 * till we find some node which is adjacent to initx and inity
+	 * we unmark every node in visited array so that future iterations can use that node
+	 * to find answer
+	 */
+	public static void finder(String[][] graph,int x,int y,int initx,int inity,int k,String s1,int[][] visited) {
+		if(x==initx && y==inity && k==0) {
+			graph[0][0] = "1";
+			visited[x][y] = 0;
+			return;
+		}
+		if(x<0 || x==graph.length || y<0 || y==graph[0].length || visited[x][y]==1) {
+			return;
+		}
 		if(k!=0) {
 			if(graph[x][y].equals(s1) && visited[x][y] == 0) {
 				visited[x][y] = 1;
-				finder(graph, x+1, y, k, s1, visited);
-				finder(graph, x, y+1, k, s1, visited);
-				finder(graph, x, y-1, k, s1, visited);
-				finder(graph, x-1, y, k, s1, visited);
+				finder(graph, x+1, y,initx,inity, k-1, s1, visited);
+				finder(graph, x, y+1,initx,inity, k-1, s1, visited);
+				finder(graph, x, y-1,initx,inity, k-1, s1, visited);
+				finder(graph, x-1, y,initx,inity, k-1, s1, visited);
+				visited[x][y] = 0;//we are doing this because we can use this index for future findings
+				//but for current iteration we should not come back to this point
 			}
 		}
 		else {
-			if(graph[x][y].equals(s1) && visited[x][y] == 0) {
+			if(x==initx && y==inity) {
+				graph[0][0] = "1";
+				visited[x][y] = 0;
+				return;
+			}
+			else if(graph[x][y].equals(s1) && visited[x][y] == 0) {
 				visited[x][y] = 1;
-				finder(graph, x+1, y, k, s1, visited);
-				finder(graph, x, y+1, k, s1, visited);
-				finder(graph, x, y-1, k, s1, visited);
-				finder(graph, x-1, y, k, s1, visited);
+				finder(graph, x+1, y,initx,inity, k, s1, visited);
+				finder(graph, x, y+1,initx,inity, k, s1, visited);
+				finder(graph, x, y-1,initx,inity, k, s1, visited);
+				finder(graph, x-1, y,initx,inity, k, s1, visited);
+				visited[x][y] = 0;//we are doing this because we can use this index for future findings
+				//but for current iteration we should not come back to this point
 			}
 		}
 	}
@@ -70,8 +94,24 @@ public class Connecting_dots {
 		for (int i = 0; i < visited.length; i++) {
 			Arrays.fill(visited[i], 0);
 		}
+		outer: for (int i = 0; i < visited.length; i++) {
+			for (int j = 0; j < visited[0].length; j++) {
+				if(visited[i][j]==0) {
+					finder(graph, i, j, i, j, 4,graph[i][j], visited);
+				}
+				if(graph[0][0].equals("1")) {
+					break outer;
+				}
+			}
+		}
+		if(graph[0][0].equals("1")) {
+			System.out.println(1);
+		}
+		else {
+			System.out.println("0");
+		}
 		sf.close();
-		
+
 	}
 
 }

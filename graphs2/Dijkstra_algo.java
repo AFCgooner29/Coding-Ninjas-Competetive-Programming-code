@@ -1,4 +1,8 @@
 package graphs2;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
 /*
  * Dijkstra's Algorithm
 Send Feedback
@@ -26,11 +30,58 @@ Sample Output 1 :
 3 5
 
  */
+/*
+ * We will find min distance algo
+ */
 public class Dijkstra_algo {
-
+	public static int getMinVer(int[] dist,int[] visited,int i) {
+		int min = -1;
+		for (int j = 0; j < visited.length; j++) {
+			if(visited[j]==0 && ((min==-1) || dist[j]<dist[min])) {
+				min = j;
+			}
+		}
+		return min;
+	}
+	public static void djkistra(int[][] graph,int[] visited) {
+		int[] dist = new int[graph.length];
+		Arrays.fill(dist, Integer.MAX_VALUE);
+		dist[0] = 0;
+		for (int i = 0; i < graph.length; i++) {
+			int min_ver = getMinVer(dist, visited, i);
+			visited[min_ver] = 1;
+			for (int j = 0; j < graph.length; j++) {
+				if(graph[min_ver][j]!=0 && visited[j]==0) {
+					if(dist[min_ver]+graph[min_ver][j]<dist[j]) {
+						dist[j] = dist[min_ver]+graph[min_ver][j];
+					}
+				}
+			}
+		}
+		for (int i = 0; i < dist.length; i++) {
+			System.out.println(i+" "+dist[i]);
+		}
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		Scanner sf = new Scanner(System.in);
+		int V = sf.nextInt();
+		int E = sf.nextInt();
+		int[][] edges = new int[V][V];
+		for (int i = 0; i < edges.length; i++) {
+			Arrays.fill(edges[i],0);
+		}
+		for (int i = 0; i < E; i++) {
+			int x = sf.nextInt();
+			int y = sf.nextInt();
+			int w = sf.nextInt();
+			edges[x][y] = w;
+			edges[y][x] = w;//intitailizing Adjacecncy matrix
+		}
+		int[] visited = new int[V];
+		Arrays.fill(visited, 0);
+		djkistra(edges,visited);
+		sf.close();
 	}
 
 }
