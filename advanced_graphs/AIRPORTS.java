@@ -56,6 +56,7 @@ Sample Output
 Case #1: 145 1
 Case #2: 2090 2
  */
+
 public class AIRPORTS {
 	public static int getParent(int[] parent, int i) {
 		if(parent[i]==i) {

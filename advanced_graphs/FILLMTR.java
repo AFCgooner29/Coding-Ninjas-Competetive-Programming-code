@@ -44,6 +44,7 @@ yes
 no
  */
 /*
+ * 
  * Copied ;-)
  * 
  * #include <bits/stdc++.h>

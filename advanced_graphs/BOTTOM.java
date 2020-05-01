@@ -51,6 +51,7 @@ Sample Output
  * Note if there's any vertices which goes out some other component then that whole component 
  * elements can't be bottom
  */
+
 public class BOTTOM {
 	public static void DFS(int[][] edges, int start, int[] visited, Stack<Integer> holder) {
 		visited[start] = 1;
